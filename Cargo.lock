@@ -842,6 +842,7 @@ dependencies = [
 [[package]]
 name = "widgets"
 version = "0.1.0"
+source = "git+https://github.com/Elkan10/wl_widgets_lib.git#6a61b5c27157816a93b71aa739e18355bbab632a"
 dependencies = [
  "rusttype",
  "tempfile",
