@@ -6,4 +6,4 @@ edition = "2021"
 [dependencies]
 chrono = "0.4.39"
 hyprland = "0.4.0-beta.2"
-widgets = { path = "/media/Drive2/rust/widgets"}
+widgets = { git = "https://github.com/Elkan10/wl_widgets_lib.git"}
