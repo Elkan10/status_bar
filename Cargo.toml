@@ -6,4 +6,5 @@ edition = "2021"
 [dependencies]
 chrono = "0.4.39"
 hyprland = "0.4.0-beta.2"
+sysinfo = "0.34.2"
 widgets = { git = "https://github.com/Elkan10/wl_widgets_lib.git"}

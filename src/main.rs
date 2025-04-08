@@ -1,4 +1,4 @@
-use std::{thread, time::Duration};
+use std::{fmt::Pointer, thread, time::Duration};
 
 use chrono::{TimeDelta, Timelike};
 use hyprland::{data::Workspace, shared::HyprDataActive};
@@ -25,17 +25,25 @@ fn main() {
     
     let mut time = chrono::Local::now().checked_sub_signed(TimeDelta::minutes(2)).unwrap();
     let mut wrk = -1;
+    let mut temp = 0.0;
 
     let mut comp = widget.get_comp().unwrap();
 
+    let mut sys = sysinfo::Components::new_with_refreshed_list();
+
+    let cpu = sys.iter_mut().find(|x| x.label() == "Tctl").unwrap();
 
     loop {
-        while (chrono::Local::now().minute() == time.minute()) && (Workspace::get_active().unwrap().id - 1 == wrk) {
+        let mut t = cpu.temperature().unwrap();
+        while (chrono::Local::now().minute() == time.minute()) && (Workspace::get_active().unwrap().id - 1 == wrk) && (temp >= t - 1.0 && temp <= t + 1.0) {
             thread::sleep(Duration::from_millis(500));
+            cpu.refresh();
+            t = cpu.temperature().unwrap();
         }
         time = chrono::Local::now();
         wrk = Workspace::get_active().unwrap().id - 1;
-        let text = format!("{} --- {}",time.format("%H:%M, %d %b %Y"), wrk_icons.iter().map(|c| c.to_string()).collect::<Vec<String>>().join(" "));
+        temp = t;
+        let text = format!("{} --- {} | CPU: {} °C",time.format("%H:%M, %d %b %Y"), wrk_icons.iter().map(|c| c.to_string()).collect::<Vec<String>>().join(" "), temp.round());
         comp.draw_rect(0x7F000000.into(), Vector2::new(0.0,0.0), Vector2::new(1920.0, 30.0)).unwrap();
         comp.draw_text(text.to_string(), Vector2::new(0.0,25.0), 30.0, font.clone(), |_,c| {
             if c == wrk_icons[wrk as usize] {
