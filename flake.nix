@@ -23,6 +23,14 @@
               pkgs.freetype
               pkgs.file
             ];
+            buildInputs = [
+              pkgs.cmake
+              pkgs.libxkbcommon
+              pkgs.pkg-config
+              pkgs.fontconfig
+              pkgs.freetype
+              pkgs.file
+            ];
             cargoLock.outputHashes = {
               "widgets-0.1.0" = "sha256-w8BSUiQTe4h0NJWhwSmG7syrFBtGR9fB8unaAD5Giag=";
             };
