@@ -10,7 +10,7 @@
         generatedConfig = builtins.toJSON config.status_bar.settings;
       in {
         home.packages = [
-          pkgs.rustPlatform.buildRustPackage {
+          (pkgs.rustPlatform.buildRustPackage {
             pname = "status_bar";
             version = "0.1.0";
             src = ./.;
@@ -19,7 +19,7 @@
             cargoLock.outputHashes = {
               "widgets-0.1.0" = "sha256-w8BSUiQTe4h0NJWhwSmG7syrFBtGR9fB8unaAD5Giag=";
             };
-          }
+          })
         ];
         home.file.".config/status_bar/config.json".text = generatedConfig;
       });
@@ -34,7 +34,7 @@
             description = "Width (in pixels) of window";
             type = lib.types.int;
           };
-          status_bar.height = lib.mkOption {
+          height = lib.mkOption {
             description = "Height (in pixels) of window";
             type = lib.types.int;
           };
