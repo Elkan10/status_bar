@@ -19,6 +19,7 @@
               pkgs.cmake
               pkgs.libxkbcommon
               pkgs.pkg-config
+              pkgs.fontconfig
               pkgs.freetype
               pkgs.file
             ];
