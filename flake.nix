@@ -15,7 +15,7 @@
             version = "0.1.0";
             src = ./.;
             cargoLock.lockFile = ./Cargo.lock;
-            nativeBuildInputs = [ pkgs.cmake pkgs.libxkbcommon ];
+            nativeBuildInputs = [ pkgs.cmake pkgs.libxkbcommon pkgs.pkg-config ];
             cargoLock.outputHashes = {
               "widgets-0.1.0" = "sha256-w8BSUiQTe4h0NJWhwSmG7syrFBtGR9fB8unaAD5Giag=";
             };
