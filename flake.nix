@@ -15,7 +15,7 @@
             version = "0.1.0";
             src = ./.;
             cargoLock.lockFile = ./Cargo.lock;
-            buildInputs = [];
+            buildInputs = [ pkgs.cmake pkgs.libxkbcommon ];
             cargoLock.outputHashes = {
               "widgets-0.1.0" = "sha256-w8BSUiQTe4h0NJWhwSmG7syrFBtGR9fB8unaAD5Giag=";
             };
