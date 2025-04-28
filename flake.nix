@@ -5,9 +5,9 @@
 
   outputs = { ... }: {
     homeManagerModules.default = {config, lib, pkgs, ...}: {
-      config =
-      let
-        generatedConfig = builtins.toJSON config.status_bar;
+      config = lib.mkIf config.status_bar.enable
+      (let
+        generatedConfig = builtins.toJSON config.status_bar.settings;
       in {
         home.packages = [
           pkgs.rustPlatform.buildRustPackage {
@@ -22,52 +22,55 @@
           }
         ];
         home.file.".config/status_bar/config.json".text = generatedConfig;
-      };
+      });
       options = {
-        status_bar.icons = lib.mkOption {
-          description = "The icons for workspaces";
-          type = lib.types.listOf lib.types.str;
-        };
-        status_bar.width = lib.mkOption {
-          description = "Width (in pixels) of window";
-          type = lib.types.int;
-        };
-        status_bar.height = lib.mkOption {
-          description = "Height (in pixels) of window";
-          type = lib.types.int;
-        };
-        status_bar.exclusive = lib.mkOption {
-          description = "Exclusize zone height (in pixels)";
-          type = lib.types.int;
-        };
-        status_bar.cpu_label = lib.mkOption {
-          description = "CPU label for temp reading";
-          default = "Tctl";
-          type = lib.types.str;
-        };
-        status_bar.text_size = lib.mkOption {
-          description = "Text size (in points)";
-          type = lib.types.int;
-        };
-        status_bar.text_height = lib.mkOption {
-          description = "Text position (in y)";
-          type = lib.types.int;
-        };
-        status_bar.bg_color = lib.mkOption {
-          description = "Background color";
-          type = lib.types.str;
-        };
-        status_bar.text_color = lib.mkOption {
-          description = "Text color";
-          type = lib.types.str;
-        };
-        status_bar.selected_color = lib.mkOption {
-          description = "Color of selected workspace";
-          type = lib.types.str;
-        };
-        status_bar.font = lib.mkOption {
-          description = "Name of font to use for text";
-          type = lib.types.str;
+        status_bar.enable = lib.mkEnableOption "Status Bar";
+        status_bar.settings = {
+          icons = lib.mkOption {
+            description = "The icons for workspaces";
+            type = lib.types.listOf lib.types.str;
+          };
+          width = lib.mkOption {
+            description = "Width (in pixels) of window";
+            type = lib.types.int;
+          };
+          status_bar.height = lib.mkOption {
+            description = "Height (in pixels) of window";
+            type = lib.types.int;
+          };
+          exclusive = lib.mkOption {
+            description = "Exclusize zone height (in pixels)";
+            type = lib.types.int;
+          };
+          cpu_label = lib.mkOption {
+            description = "CPU label for temp reading";
+            default = "Tctl";
+            type = lib.types.str;
+          };
+          text_size = lib.mkOption {
+            description = "Text size (in points)";
+            type = lib.types.int;
+          };
+          text_height = lib.mkOption {
+            description = "Text position (in y)";
+            type = lib.types.int;
+          };
+          bg_color = lib.mkOption {
+            description = "Background color";
+            type = lib.types.str;
+          };
+          text_color = lib.mkOption {
+            description = "Text color";
+            type = lib.types.str;
+          };
+          selected_color = lib.mkOption {
+            description = "Color of selected workspace";
+            type = lib.types.str;
+          };
+          font = lib.mkOption {
+            description = "Name of font to use for text";
+            type = lib.types.str;
+          };
         };
       };
     };
